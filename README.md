@@ -15,6 +15,7 @@ Dialog-client
 * dialogCreateDialog.js
 * dialogDeleteDialog.js
 * dialogListDialogs.js
+* dialogGetDialogs.js
 
 You must install the SDK with the following command:
 
