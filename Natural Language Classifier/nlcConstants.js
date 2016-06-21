@@ -3,15 +3,23 @@
  * @author: hkomine
  */
 
-// CREDENTIALS - fill with the "username" and "password" from the "Service Credentials"
-var USERNAME = "<USERNAE for Dialog service instance>";
-var PASSWORD = "<PASSWORD for Dialog service instance>";
+// CREDENTIALS - Copy JSON from the "Service Credentials"
+var SERVICE_CREDENTIALS = {
+  "credentials": {
+    "url": "https://gateway.watsonplatform.net/natural-language-classifier/api",
+    "password": "<password>",
+    "username": "<username>"
+  }
+};
 
 exports.getUsername = function() {
-	return USERNAME;
+	return SERVICE_CREDENTIALS.credentials.username;
 };
 
 exports.getPassword = function() {
-    return PASSWORD;
+    return SERVICE_CREDENTIALS.credentials.password;
 };
 
+exports.getUrl = function() {
+    return SERVICE_CREDENTIALS.credentials.url;
+};

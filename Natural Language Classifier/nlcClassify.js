@@ -2,7 +2,6 @@
  * 
  * @author: hkomine
  */
-var fs = require('fs');
 var watson = require('watson-developer-cloud');
 var nlc_constants = require('./nlcConstants.js');
 var argv = require('argv');
@@ -10,23 +9,17 @@ var argv = require('argv');
 var debug = false;
 
 argv.option([ {
-	name : 'trainingdata',
+	name : 'classifier_id',
+	short : 'c',
+	type : 'string',
+	description : 'classifier id',
+	example : "'script --classifier_id=<classifier_id>' or 'script -c <classifier_id>'"
+}, {
+	name : 'text',
 	short : 't',
 	type : 'string',
-	description : 'training data file path',
-	example : "'script --trainingdata=training.csv' or 'script -f training.csv'"
-}, {
-	name : 'name',
-	short : 'n',
-	type : 'string',
-	description : 'classifier name',
-	example : "'script --name=\"my classifier\"' or 'script -f \"my classifier\"'"
-}, {
-	name : 'language',
-	short : 'l',
-	type : 'string',
-	description : 'ISO language code',
-	example : "'script --language=\"en\"' or 'script -l \"en\"'"
+	description : 'A text to be classified',
+	example : "'script --text=<target text>' or 'script -t <target text>'"
 }, {
 	name : 'debug',
 	short : 'd',
@@ -39,11 +32,11 @@ argv.option([ {
 var args = argv.run();
 debug = args.options.debug;
 
-var trainingdata_filepath = args.options.trainingdata;
-var classifier_name = args.options.name;
-var language = args.options.language;
-if (!trainingdata_filepath || !classifier_name || !language) {
+var classifier_id = args.options.classifier_id;
+var text = args.options.text;
+if (!classifier_id || !text){
 	console.error('Required argument missing.');
+	console.error("'script --help' or 'script -h' to show help.");
 	return;
 }
 
@@ -59,13 +52,7 @@ var natural_language_classifier = watson.natural_language_classifier({
 	version : 'v1'
 });
 
-var params = {
-	language : language,
-	name : classifier_name,
-	training_data : fs.createReadStream(trainingdata_filepath)
-};
-
-natural_language_classifier.create(params, function(err, res) {
+natural_language_classifier.classify({text: text, classifier_id: classifier_id }, function(err, res) {
 	if (err) {
 		console.log('error', err);
 		return;

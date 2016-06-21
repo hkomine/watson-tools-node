@@ -26,7 +26,7 @@ if (debug) {
 }
 
 var natural_language_classifier = watson.natural_language_classifier({
-	url : 'https://gateway.watsonplatform.net/natural-language-classifier/api',
+	url : nlc_constants.getUrl(),
 	username : nlc_constants.getUsername(),
 	password : nlc_constants.getPassword(),
 	version : 'v1'

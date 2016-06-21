@@ -4,9 +4,12 @@
 The following code require Watson-Developer-Cloud Node SDK:
 
 NaturalLanguageClassifier-client
+* nlcClassify.js
+* nlcClassify_GET.js
 * nlcConstants.js
 * nlcCreateClassifier.js
 * nlcDeleteClassifier.js
+* nlcGetClassifier.js
 * nlcListClassifiers.js
 
 Dialog-client
