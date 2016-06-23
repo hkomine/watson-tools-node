@@ -65,6 +65,11 @@ var dialog_service = watson.dialog({
 if (!dialog_id) {
 	dialog_id = dialog_constants.getDialogId();
 }
+if (!dialog_id) {
+	console.error('Required argument missing.');
+	console.error("'script --help' or 'script -h' to show help.");
+	return;
+}
 
 function processResponse(err, res) {
 	if (err) {

@@ -44,6 +44,7 @@ debug = args.options.debug;
 var dialog_id = args.options.dialog_id;
 if (!dialog_id) {
 	console.error('Required argument missing.');
+	console.error("'script --help' or 'script -h' to show help.");
 	return;
 }
 

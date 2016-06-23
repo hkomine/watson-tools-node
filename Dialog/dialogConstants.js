@@ -3,18 +3,26 @@
  * @author: hkomine
  */
 
-// CREDENTIALS - fill with the "username" and "password" from the "Service
-// Credentials"
-var USERNAME = "<USERNAE for Dialog service instance>";
-var PASSWORD = "<PASSWORD for Dialog service instance>";
-var DIALOG_ID = "<Dialog ID, which generally can be override by '-a' argument>";
+// CREDENTIALS - Copy JSON from the "Service Credentials"
+var SERVICE_CREDENTIALS = {
+  "credentials": {
+    "url": "https://gateway.watsonplatform.net/dialog/api",
+    "password": "<password>",
+    "username": "<username>"
+  }
+};
+var DIALOG_ID = "a08f9b51-7152-4d48-801d-94df077a4194";
 
 exports.getUsername = function() {
-	return USERNAME;
+	return SERVICE_CREDENTIALS.credentials.username;
 };
 
 exports.getPassword = function() {
-	return PASSWORD;
+    return SERVICE_CREDENTIALS.credentials.password;
+};
+
+exports.getUrl = function() {
+    return SERVICE_CREDENTIALS.credentials.url;
 };
 
 exports.getDialogId = function() {

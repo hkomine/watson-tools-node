@@ -44,6 +44,7 @@ var classifier_name = args.options.name;
 var language = args.options.language;
 if (!trainingdata_filepath || !classifier_name || !language) {
 	console.error('Required argument missing.');
+	console.error("'script --help' or 'script -h' to show help.");
 	return;
 }
 

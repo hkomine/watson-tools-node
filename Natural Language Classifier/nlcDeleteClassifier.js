@@ -29,6 +29,7 @@ debug = args.options.debug;
 var classifier_id = args.options.classifier_id;
 if (!classifier_id) {
 	console.error('Required argument missing.');
+	console.error("'script --help' or 'script -h' to show help.");
 	return;
 }
 
