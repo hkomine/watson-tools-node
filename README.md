@@ -12,6 +12,19 @@ NaturalLanguageClassifier-client
 * nlcGetClassifier.js
 * nlcListClassifiers.js
 
+RetrieveAndRank-client
+*rrConstants.js
+*rrCreateCluster.js
+*rrListClusters.js
+*rrPollCluster.js
+*rrUploadConfig.js
+*rrListConfigs.js
+*rrCreateCollection.js
+*rrListCollections.js
+*rrDeleteCluster.js
+*rrDeleteCollection.js
+*rrIndexDocuments.js
+
 Dialog-client
 * dialogConstants.js
 * dialogConversation.js
