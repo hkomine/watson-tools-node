@@ -41,11 +41,13 @@ var prefix = 'You> ';
 console.log('Watson Conversation app. (Ctrl-c or Ctrl-d for terminating.)');
 
 if (debug) {
+	console.log('url is ' + conversation_constants.getUrl());
 	console.log('username is ' + conversation_constants.getUsername());
 	console.log('password is ' + conversation_constants.getPassword());
 }
 
 var conversation_service = watson.conversation({
+	url : conversation_constants.getUrl(),
 	username : conversation_constants.getUsername(),
 	password : conversation_constants.getPassword(),
 	version : 'v1',
