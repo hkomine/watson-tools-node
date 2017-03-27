@@ -7,11 +7,8 @@
 var SERVICE_CREDENTIALS = {
   "credentials": {
     "url": "https://gateway.watsonplatform.net/discovery/api",
-    "username": "78ac4f0c-04dd-412d-93e0-a767d513a2f6",
-    "password": "0AqcXeIO8Y34"
-/*    "password": "<password>",
+    "password": "<password>",
     "username": "<username>"
-*/
   }
 };
 
