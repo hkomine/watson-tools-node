@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @author: hkomine
  */
 var watson = require('watson-developer-cloud');
@@ -58,7 +58,7 @@ var discovery = my_library.myDiscovery({
 	username : discovery_constants.getUsername(),
 	password : discovery_constants.getPassword(),
 	version : 'v1',
-	version_date : watson.DiscoveryV1.VERSION_DATE_2016_12_15
+	version_date : watson.DiscoveryV1.VERSION_DATE_2017_04_27
 });
 
 var configuration_text = {};
@@ -78,15 +78,18 @@ configuration_text = {
 		},
 		'json_normalizations' : []
 	},
-	"enrichments" : {
-		'destination_field' : 'enriched_text',
-		'source_field' : 'text',
-		'enrichment' : 'alchemy_language',
-		'options' : {
-			'extract' : 'entity, typed-rels',
-			'model' : model_id
+	"enrichments" : [
+		{
+			'destination_field' : 'enriched_text',
+			'source_field' : 'text',
+			'enrichment' : 'alchemy_language',
+			'options' : {
+				'extract' : 'entity, typed-rels',
+				'model' : model_id
+			}
 		}
-	}
+	],
+  "normalizations": []
 };
 
 discovery.addConfiguration ({environment_id: environment_id, configuration: configuration_text }, function(err, res) {

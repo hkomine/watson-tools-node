@@ -18,9 +18,6 @@ exports.myDiscovery = function(initial_options) {
 		var options = {
 			url : self.base_url +'/v1/environments/' + environment_id + '/configurations/' + configuration_id + '?version=' + initial_options.version_date,
 			method : 'DELETE',
-			headers : {
-				'Accept' : 'application/wds+json'
-			},
 			auth : {
 				user : self.username,
 				password : self.password
@@ -31,18 +28,18 @@ exports.myDiscovery = function(initial_options) {
 			callback(error, JSON.parse(body));
 		});
 	};
-	
+
 	self.addConfiguration = function(params, callback) {
-		
+
 		var environment_id = params.environment_id;
 		var configuration = params.configuration;
-		
+
 		var options = {
 			url : self.base_url +'/v1/environments/' + environment_id + '/configurations?version=' + initial_options.version_date,
 			method : 'POST',
 			headers : {
 				'Content-Type' : 'application/json',
-				'Accept' : 'application/wds+json'
+				'Accept' : 'application/json'
 			},
 			auth : {
 				user : self.username,
@@ -50,17 +47,17 @@ exports.myDiscovery = function(initial_options) {
 			},
 			body : JSON.stringify(configuration),
 		};
-		
+
 		request(options, function(error, response, body) {
 			callback(error, JSON.parse(body));
 		});
 	}
-	
+
 	self.preview = function(params, callback) {
 		var environment_id = params.environment_id;
 		var configuration_id = params.configuration_id;
 		var html = params.html;
-		
+
 		var url = self.base_url +'/v1/environments/' + environment_id + '/preview?configuration_id=' + configuration_id + '&version=' + initial_options.version_date;
 
 		var options = {
@@ -68,24 +65,24 @@ exports.myDiscovery = function(initial_options) {
 			method : 'POST',
 			headers : {
 				'Content-Type' : 'multipart/form-data',
-				'Accept' : 'application/wds+json'
+				'Accept' : 'application/json'
 			},
 			auth : {
 				user : self.username,
 				password : self.password
 			}
 		};
-		
+
 		var req = request.post(options, function(error, response, body) {
 			callback(error, JSON.parse(body));
 		});
-		
+
 		var form = req.form();
 		form.append('file', html, {
 			filename: '_',
 			contentType : 'text/html'
 		})
 	}
-	
+
 	return self;
 };

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @author: hkomine
  */
 var watson = require('watson-developer-cloud');
@@ -61,7 +61,7 @@ var discovery = my_library.myDiscovery({
 	username : discovery_constants.getUsername(),
 	password : discovery_constants.getPassword(),
 	version : 'v1',
-	version_date : watson.DiscoveryV1.VERSION_DATE_2016_12_15
+	version_date : watson.DiscoveryV1.VERSION_DATE_2017_04_27
 });
 
 var html = fs.readFileSync(filepath, 'utf-8');
