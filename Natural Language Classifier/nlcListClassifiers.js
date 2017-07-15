@@ -6,8 +6,6 @@ var watson = require('watson-developer-cloud');
 var nlc_constants = require('./nlcConstants.js');
 var argv = require('argv');
 
-var debug = false;
-
 argv.option({
 	name : 'debug',
 	short : 'd',
@@ -18,25 +16,35 @@ argv.option({
 
 // get arguments
 var args = argv.run();
-debug = args.options.debug;
+const debug = args.options.debug;
 
 if (debug) {
-	console.log('username is ' + nlc_constants.getUsername());
-	console.log('password is ' + nlc_constants.getPassword());
+	console.log('url: ' +  nlc_constants.getUrl());
+	console.log('username: ' + nlc_constants.getUsername());
+	console.log('password: ' + nlc_constants.getPassword());
 }
 
-var natural_language_classifier = watson.natural_language_classifier({
+const natural_language_classifier = watson.natural_language_classifier({
 	url : nlc_constants.getUrl(),
 	username : nlc_constants.getUsername(),
 	password : nlc_constants.getPassword(),
 	version : 'v1'
 });
 
-natural_language_classifier.list({}, function(err, res) {
-	if (err) {
-		console.log('error', err);
-		return;
-	}
-
+listClassifiers(natural_language_classifier).then(function (res) {
 	console.log('response:', JSON.stringify(res, null, 2));
+}).catch(function (err) {
+    console.error(err);
 });
+
+function listClassifiers(natural_language_classifier) {
+	return new Promise(function(resolve, reject){
+		natural_language_classifier.list({}, function(err, res) {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve(res);
+		});
+	});
+}

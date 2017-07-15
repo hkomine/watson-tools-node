@@ -37,12 +37,13 @@ var text = args.options.text;
 if (!classifier_id || !text){
 	console.error('Required argument missing.');
 	console.error("'script --help' or 'script -h' to show help.");
-	return;
+	process.exit;
 }
 
 if (debug) {
-	console.log('username is ' + nlc_constants.getUsername());
-	console.log('password is ' + nlc_constants.getPassword());
+	console.log('url: ' +  nlc_constants.getUrl());
+	console.log('username: ' + nlc_constants.getUsername());
+	console.log('password: ' + nlc_constants.getPassword());
 }
 
 var natural_language_classifier = watson.natural_language_classifier({
@@ -52,11 +53,28 @@ var natural_language_classifier = watson.natural_language_classifier({
 	version : 'v1'
 });
 
-natural_language_classifier.classify({text: text, classifier_id: classifier_id }, function(err, res) {
-	if (err) {
-		console.log('error', err);
-		return;
-	}
+var params = {
+	text: text,
+	classifier_id : classifier_id
+};
+if (debug) {
+	console.log("params: ", JSON.stringify(params, null, 2));
+}
 
+classify(natural_language_classifier, params).then(function (res) {
 	console.log('response:', JSON.stringify(res, null, 2));
+}).catch(function (err) {
+    console.error(err);
 });
+
+function classify(natural_language_classifier, params) {
+	return new Promise(function(resolve, reject){
+		natural_language_classifier.classify(params, function(err, res) {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve(res);
+		});
+	});
+}

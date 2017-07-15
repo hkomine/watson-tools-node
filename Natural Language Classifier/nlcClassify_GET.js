@@ -44,13 +44,14 @@ var text = args.options.text;
 if (!classifier_id || !text){
 	console.error('Required argument missing.');
 	console.error("'script --help' or 'script -h' to show help.");
-	return;
+	process.exit;
 }
 var release_version = args.options.release_version;
 
 if (debug) {
-	console.log('username is ' + nlc_constants.getUsername());
-	console.log('password is ' + nlc_constants.getPassword());
+	console.log('url: ' +  nlc_constants.getUrl());
+	console.log('username: ' + nlc_constants.getUsername());
+	console.log('password: ' + nlc_constants.getPassword());
 }
 
 var natural_language_classifier = my_library.myNaturalLanguageClassifier({
@@ -61,15 +62,29 @@ var natural_language_classifier = my_library.myNaturalLanguageClassifier({
 	debug : debug
 });
 
-natural_language_classifier.classify({
+var params = {
 	text: text,
-	classifier_id: classifier_id,
-	release_version: release_version}, function(err, res) {
-	if (err) {
-		console.log('error', err);
-		return;
-	}
+	classifier_id : classifier_id,
+	release_version: release_version
+};
+if (debug) {
+	console.log("params: ", JSON.stringify(params, null, 2));
+}
 
+classify(natural_language_classifier, params).then(function (res) {
 	console.log('response:', JSON.stringify(res, null, 2));
-//	console.log('response:', res);
+}).catch(function (err) {
+    console.error(err);
 });
+
+function classify(natural_language_classifier, params) {
+	return new Promise(function(resolve, reject){
+		natural_language_classifier.classify(params, function(err, res) {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve(res);
+		});
+	});
+}
