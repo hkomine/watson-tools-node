@@ -70,6 +70,7 @@ async function createClassifierAndWait(natural_language_classifier, language, na
 	if (debug) {
 		console.log("params: ", JSON.stringify(params_create, null, 2));
 	}
+	console.log(`creating new classifier at ${getNow()}`);
 	var res_create = await createClassifier(natural_language_classifier, params_create);
 	console.log('response:', JSON.stringify(res_create, null, 2));
 	
@@ -82,9 +83,10 @@ async function createClassifierAndWait(natural_language_classifier, language, na
 	// loop until new classifier gets available
 	var isAvailable = false;
 	while (!isAvailable) {
-		await sleep(3000);
-		var res_get = getClassifier(natural_language_classifier, params_get);
+		await sleep(30000);
+		var res_get = await getClassifier(natural_language_classifier, params_get);
 		console.log('response:', JSON.stringify(res_get, null, 2));
+		console.log(`current classifier status ${res_get.status} at ${getNow()}`);
 		if (res_get.status) {
 			isAvailable = (res_get.status == 'Available');
 		}
@@ -119,4 +121,9 @@ function sleep(msec) {
 	return new Promise(function(resolve, reject){
 		setTimeout(resolve, msec);
 	});
+}
+
+function getNow() {
+	var dt = new Date();
+	return `${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()} ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
 }
